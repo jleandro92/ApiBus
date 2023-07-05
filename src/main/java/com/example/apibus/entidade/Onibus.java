@@ -22,7 +22,7 @@ import lombok.Setter;
 public class Onibus {
 
     @Id 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     
     @Column(name = "codBus")
     private Long Id;

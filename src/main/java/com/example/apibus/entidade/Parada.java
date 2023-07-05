@@ -18,7 +18,7 @@ import lombok.Setter;
 @Getter @Setter
 public class Parada {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
 
     @Column(name = "codPara")
     private Long id;

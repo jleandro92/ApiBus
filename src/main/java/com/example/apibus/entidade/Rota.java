@@ -17,7 +17,7 @@ import jakarta.persistence.GenerationType;
 @Getter @Setter
 public class Rota {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.AUTO)
 
   @Column (name = "codigo")
   private Long id;
