@@ -8,12 +8,11 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 
 import com.example.apibus.entidade.Onibus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RepositoryRestResource(collectionResourceRel = "onibus", path = "onibus")
+@CrossOrigin(origins = "*")
 public interface OnibusRepository extends JpaRepository <Onibus, Long> {
     
-    List<Onibus> findBynumOnibus (@Param("numOnibus") Integer number);
-
-
-
+    List<Onibus> findBynumOnibus (@Param("numOnibus") String name);
 }

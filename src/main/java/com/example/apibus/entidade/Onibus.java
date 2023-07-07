@@ -28,10 +28,10 @@ public class Onibus {
     private Long Id;
 
     @Column (name = "busNum")
-    private Integer numOnibus;
+    private String numOnibus;
 
     @Column(name = "acess")
-    private Boolean acessibilidade;
+    private String acessibilidade;
 
     @ManyToOne
     @JoinColumn(name = "rota_id")
