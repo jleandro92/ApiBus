@@ -25,15 +25,6 @@ public class Rota {
   @Column (name = "nomeRota")
   private String nomeRota;
 
-  @Column (name = "horaSaida")
-  private String horaSaida;
-
-  @Column (name = "horaChegada")
-  private String horaChegada;//hora prevista da chegada ao destino
-
-  @Column (name = "valorLinha")
-  private Float  valorLinha;
-
   @OneToMany(mappedBy = "rota")
   private List<Onibus> onibus;
 
