@@ -2,9 +2,13 @@ package com.example.apibus.entidade;
 
 import java.util.List;
 
+
+
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -19,27 +23,21 @@ public class Rota {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
 
-  @Column (name = "codigo")
+  @Column (name = "id")
   private Long id;
 
   @Column (name = "nomeRota")
   private String nomeRota;
-
-  @Column (name = "horaSaida")
-  private String horaSaida;
-
-  @Column (name = "horaChegada")
-  private String horaChegada;//hora prevista da chegada ao destino
-
-  @Column (name = "valorLinha")
-  private Float  valorLinha;
 
   @OneToMany(mappedBy = "rota")
   private List<Onibus> onibus;
 
   @OneToMany(mappedBy = "rota")
   private List<Parada> paradas;
-    
+
+ 
+    @ManyToMany(mappedBy = "rotas")
+    private List<Usuario> usuarios;
 }
 
 

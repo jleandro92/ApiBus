@@ -30,6 +30,15 @@ public class Onibus {
     @Column (name = "busNum")
     private String numOnibus;
 
+    @Column (name = "horaSaida")
+    private String horaSaida;
+
+    @Column (name = "horaChegada")
+    private String horaChegada;//hora prevista da chegada ao destino
+
+    @Column (name = "valorLinha")
+    private Float  valorLinha;
+
     @Column(name = "acess")
     private String acessibilidade;
 
@@ -42,3 +51,4 @@ public class Onibus {
     @OneToMany(mappedBy = "onibus")
     private List<Parada>paradas;
 }
+

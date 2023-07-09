@@ -5,16 +5,19 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 //NewTable
 @Entity
-@Table(name = "user")
+@Table(name = "usuarios")
 @Getter @Setter
 public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column (name = "coduser")
     private Long id;
+
     @Email
     @Column (name = "email")
     private String email;
@@ -25,4 +28,14 @@ public class Usuario {
 
     @Column (name = "senha")
     private String senha;
+
+     @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "usuario_rotas",
+      joinColumns = @JoinColumn(name = "usuario_id", 
+referencedColumnName = "id"),
+      inverseJoinColumns = @JoinColumn(name = "rota_id",
+referencedColumnName = "id"))
+    @JsonIgnore
+    private List<Rota> rotas;
+
 }
