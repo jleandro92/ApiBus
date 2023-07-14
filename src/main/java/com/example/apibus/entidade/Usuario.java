@@ -15,7 +15,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Usuario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Email
@@ -26,8 +25,6 @@ public class Usuario {
     @Size(min = 3, max = 20, message = "Usuario deve informa um nome real")
     private String nomeUser;
 
-    @Column (name = "senha")
-    private String senha;
 
      @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "usuario_rotas",
