@@ -24,7 +24,7 @@ public class UserController {
     private UsuarioRepository usuarioRepository;
 
 
-    @PutMapping("/favoritar/{usuarioId}/{rotaId}")
+    @PutMapping("/adicionar-favorito/{usuarioId}/{rotaId}")
     public ResponseEntity<Object> addFavorito (@PathVariable("usuarioId") Long usuarioId, @PathVariable("rotaId") Long rotaId){
 
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
@@ -39,13 +39,37 @@ public class UserController {
 
             rotaRepository.save(rota);
             usuarioRepository.save(usuario);
-
-
+            
             return ResponseEntity.status(HttpStatus.OK).body("Rota favoritada com sucesso!");
             
         }
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi possivel adcionar!");
+    
+     }
+
+     @PutMapping("/remover-favorito/{usuarioId}/{rotaId}")
+    public ResponseEntity<Object> removeFavorito (@PathVariable("usuarioId") Long usuarioId, @PathVariable("rotaId") Long rotaId){
+
+        Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
+        Optional<Rota> rotaOptional = rotaRepository.findById(rotaId);
+
+        if(usuarioOptional.isPresent() && rotaOptional.isPresent()){
+            Usuario usuario = usuarioOptional.get();
+            Rota rota = rotaOptional.get();
+
+            usuario.getRotas().remove(rota);
+            rota.getUsuarios().remove(usuario);
+
+            rotaRepository.save(rota);
+            usuarioRepository.save(usuario);
+
+
+            return ResponseEntity.status(HttpStatus.OK).body("Rota Desvinculada com sucesso!");
+            
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi possivel remover, tente de novo!");
     
      }
 
