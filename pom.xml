@@ -36,11 +36,11 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
-		<!-- Dependência do PostgreSQL -->
+		<!-- Dependência do H2 -->
 		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>42.6.0</version>
+		<groupId>com.h2database</groupId>
+		<artifactId>h2</artifactId>
+		<scope>runtime</scope>
 		</dependency>
 
 		<!-- Dependência do Spring Data JPA para o PostgreSQL -->
