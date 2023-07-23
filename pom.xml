@@ -43,6 +43,13 @@
 		<scope>runtime</scope>
 		</dependency>
 
+		<!--Dependênica PostgreSQL-->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
 		<!-- Dependência do Spring Data JPA para o PostgreSQL -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
