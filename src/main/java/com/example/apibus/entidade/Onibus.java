@@ -1,5 +1,6 @@
 package com.example.apibus.entidade;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -42,12 +43,14 @@ public class Onibus {
     @Column(name = "acess")
     private String acessibilidade;
 
+    @Column(name = "week")
+    private BigInteger week;
+
     @ManyToOne
     @JoinColumn(name = "rota_id")
     @JsonIgnore
     private Rota rota;
-
-
+    
     @OneToMany(mappedBy = "onibus")
     private List<Parada>paradas;
 }
