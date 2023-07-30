@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Usuario {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column (name = "id")
     private Long id;
 
@@ -26,6 +27,16 @@ public class Usuario {
     @Size(min = 3, max = 20, message = "Usuario deve informa um nome real")
     private String nomeUser;
 
+    @Column (name = "idGoogle")
+    private String idGoogle;
+
+    @Column(name = "nivel")
+    private Integer nivel;
+
+    // Construtor padrão
+    public Usuario() {
+        this.nivel = 1; // Definindo o valor fixo para o nível
+    }
 
      @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "usuario_rotas",
