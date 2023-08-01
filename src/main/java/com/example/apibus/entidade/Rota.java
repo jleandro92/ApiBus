@@ -40,7 +40,4 @@ public class Rota {
     private List<Usuario> usuarios;
 }
 
-
-
-
  

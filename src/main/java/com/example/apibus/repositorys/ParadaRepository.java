@@ -13,6 +13,6 @@ import com.example.apibus.entidade.Parada;
 @CrossOrigin(origins = "*")
 public interface ParadaRepository extends JpaRepository<Parada, Long>{
 
-    List<Parada> findByparadaNome(@Param("paradaNome") String name);
+    List<Parada> findByPosicao(@Param("posicao") Integer name);
     
 }
