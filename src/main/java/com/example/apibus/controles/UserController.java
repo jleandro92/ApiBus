@@ -35,7 +35,15 @@ public class UserController {
         return listUsuarios;
     }
 
-    @PutMapping("/adicionar-favorito/{usuarioId}/{rotaId}")
+    @GetMapping("/usuario/{usuarioId}/rota")
+    public List<Usuario> listUser(){
+
+        List<Usuario> listUser = usuarioRepository.findAll();
+
+        return listUser;
+    }
+
+    @PutMapping("/adicionarfavorito/{usuarioId}/{rotaId}")
     public ResponseEntity<Object> addFavorito (@PathVariable("usuarioId") Long usuarioId, @PathVariable("rotaId") Long rotaId){
 
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
@@ -59,7 +67,7 @@ public class UserController {
     
      }
 
-     @PutMapping("/remover-favorito/{usuarioId}/{rotaId}")
+     @PutMapping("/removerfavorito/{usuarioId}/{rotaId}")
     public ResponseEntity<Object> removeFavorito (@PathVariable("usuarioId") Long usuarioId, @PathVariable("rotaId") Long rotaId){
 
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);

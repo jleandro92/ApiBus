@@ -39,4 +39,10 @@ public class Parada {
     @JsonIgnore
     private Onibus onibus;
 
+
+    @ManyToOne
+    @JoinColumn(name = "cidade_id")
+    @JsonIgnore
+    private Cidade cidade;
+
 }

@@ -39,6 +39,8 @@ public class ParadaController {
             parada.setRota(rota);
         }
 
+
+
         return paradaRepository.save(parada);
     }
 }

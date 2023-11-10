@@ -37,7 +37,7 @@ public class Usuario {
     public Usuario() {
         this.nivel = 1; // Definindo o valor fixo para o nível
     }
-
+    
      @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "usuario_rotas",
       joinColumns = @JoinColumn(name = "usuario_id", 

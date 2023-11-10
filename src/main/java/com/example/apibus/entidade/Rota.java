@@ -36,8 +36,8 @@ public class Rota {
   private List<Parada> paradas;
 
  
-    @ManyToMany(mappedBy = "rotas")
-    private List<Usuario> usuarios;
+  @ManyToMany(mappedBy = "rotas")
+  private List<Usuario> usuarios;
 }
 
  
