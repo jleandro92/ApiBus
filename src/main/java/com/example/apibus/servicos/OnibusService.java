@@ -6,4 +6,6 @@ public interface OnibusService {
 
     Onibus addParadaBus(Long onibusId, Long paradaId);
 
+
+
 }

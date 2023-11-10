@@ -52,6 +52,8 @@ public class OnibusController {
             Rota rota = rotaRepository.findById(ob.getRota_id()).get();
             onibus.setRota(rota);
         }
+
+
         return onibusRepository.save(onibus);
     }
 

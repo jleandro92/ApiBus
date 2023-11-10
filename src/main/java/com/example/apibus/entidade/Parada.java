@@ -17,9 +17,9 @@ import lombok.Setter;
 @Table (name = "parada")
 @Getter @Setter
 public class Parada {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+
     @Column(name = "codPara")
     private Long id;
 
@@ -39,8 +39,4 @@ public class Parada {
     @JsonIgnore
     private Onibus onibus;
 
-    @ManyToOne
-    @JoinColumn(name = "cidade_id")
-    @JsonIgnore
-    private Cidade cidade;
 }

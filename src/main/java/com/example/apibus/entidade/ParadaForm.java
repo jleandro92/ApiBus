@@ -9,5 +9,4 @@ public class ParadaForm {
     private String paradaNome;
     private Integer posicao;
     private Long rota_id;
-    private Long cidade_id;
 }
