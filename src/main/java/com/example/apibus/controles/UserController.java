@@ -1,22 +1,33 @@
 package com.example.apibus.controles;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
+import com.example.apibus.dtos.GoogleLogin;
+import com.example.apibus.dtos.TokenDto;
+import com.example.apibus.security.TokenService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.*;
 
-import com.example.apibus.entidade.Rota;
-import com.example.apibus.entidade.Usuario;
+import com.example.apibus.entidades.Rota;
+import com.example.apibus.entidades.Usuario;
 import com.example.apibus.repositorys.RotaRepository;
 import com.example.apibus.repositorys.UsuarioRepository;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/")
 public class UserController {
@@ -27,6 +38,9 @@ public class UserController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    TokenService tokenService;
+
     @GetMapping("/usuario/")
     public List<Usuario> listUsuarios(){
 
@@ -34,16 +48,54 @@ public class UserController {
 
         return listUsuarios;
     }
+    @PostMapping("/login")
+    public ResponseEntity<Object >loginGoogle(@RequestBody @Valid GoogleLogin googleLogin){
 
-    @GetMapping("/usuario/{usuarioId}/rota")
-    public List<Usuario> listUser(){
+        try{
 
-        List<Usuario> listUser = usuarioRepository.findAll();
+            UserDetails user = usuarioRepository.findByEmail(googleLogin.getEmail());
 
-        return listUser;
+            if(user == null){
+                Usuario newUser = new Usuario();
+                newUser.setEmail(googleLogin.getEmail());
+                newUser.setNomeUser(googleLogin.getNomeUser());
+                newUser.setIdGoogle(googleLogin.getIdGoogle());
+                
+                Usuario savedUser = usuarioRepository.save(newUser);
+
+                Collection<? extends GrantedAuthority> authorities = null;
+                if(savedUser.getNivel() == 100){
+                    authorities = List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
+                }else{
+                    authorities = List.of(new SimpleGrantedAuthority("ROLE_USER"));
+                }
+
+                Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+                String token = tokenService.generateToken(savedUser);
+
+                // Adicione informações extras ao token
+                Map<String, Object> tokenData = new HashMap<>();
+                tokenData.put("email", savedUser.getEmail());
+                tokenData.put("name", savedUser.getNomeUser());
+                tokenData.put("sub", savedUser.getIdGoogle());
+                tokenData.put("id", savedUser.getId());
+
+                return ResponseEntity.status(HttpStatus.OK).body(new TokenDto(token));
+            }
+
+            Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
+            Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String token = tokenService.generateToken(user.getUsername());
+
+            return ResponseEntity.status(HttpStatus.OK).body(new TokenDto(token));
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ocorreu um erro ao realizar login.");
+        }
     }
 
-    @PutMapping("/adicionarfavorito/{usuarioId}/{rotaId}")
+    @PutMapping("/adicionar-favorito/{usuarioId}/{rotaId}")
     public ResponseEntity<Object> addFavorito (@PathVariable("usuarioId") Long usuarioId, @PathVariable("rotaId") Long rotaId){
 
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
@@ -67,7 +119,7 @@ public class UserController {
     
      }
 
-     @PutMapping("/removerfavorito/{usuarioId}/{rotaId}")
+     @PutMapping("/remover-favorito/{usuarioId}/{rotaId}")
     public ResponseEntity<Object> removeFavorito (@PathVariable("usuarioId") Long usuarioId, @PathVariable("rotaId") Long rotaId){
 
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
@@ -90,6 +142,19 @@ public class UserController {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi possivel remover, tente de novo!");
     
+     }
+
+     @GetMapping("/lista-favorito/{usuarioId}/rotas")
+     public List<Rota> listRotas(@PathVariable("usuarioId") Long usuarioId) {
+         Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
+     
+         if (usuarioOptional.isPresent()) {
+             Usuario usuario = usuarioOptional.get();
+             List<Rota> rotasDoUsuario = usuario.getRotas();
+             return rotasDoUsuario;
+         } else {
+             return Collections.emptyList();
+         }
      }
 
 }

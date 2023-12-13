@@ -3,9 +3,9 @@ package com.example.apibus.servicos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.apibus.entidade.Onibus;
-import com.example.apibus.entidade.Parada;
-import com.example.apibus.entidade.Rota;
+import com.example.apibus.entidades.Onibus;
+import com.example.apibus.entidades.Parada;
+import com.example.apibus.entidades.Rota;
 import com.example.apibus.repositorys.OnibusRepository;
 import com.example.apibus.repositorys.ParadaRepository;
 import com.example.apibus.repositorys.RotaRepository;
