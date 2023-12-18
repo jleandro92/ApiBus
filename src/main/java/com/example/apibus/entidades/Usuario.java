@@ -42,7 +42,7 @@ public class Usuario implements UserDetails {
 
     // Construtor padrão
     public Usuario() {
-        this.nivel = 100;
+        this.nivel = 1;
     }
 
      @ManyToMany(cascade = CascadeType.ALL)

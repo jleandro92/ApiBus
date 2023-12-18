@@ -37,6 +37,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/rota").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/rota/*").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/rota/").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/rota/*").hasRole("ADMIN")
 
                         // User
                         .requestMatchers(HttpMethod.GET, "/usuario/").permitAll()
@@ -54,15 +55,18 @@ public class SecurityConfig {
 
                         // Favoritos
                         .requestMatchers(HttpMethod.PUT, "/adicionar-favorito/*/*").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/remover-favorito/*/*").permitAll()
 
                         // Onibus
                         .requestMatchers(HttpMethod.GET, "/onibus").permitAll()
                         .requestMatchers(HttpMethod.GET, "/onibus/").permitAll()
                         .requestMatchers(HttpMethod.GET, "/onibus/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/onibus/*/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/onibus/*/*/*").permitAll()
                         .requestMatchers(HttpMethod.POST, "/onibus").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/onibus/").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/rota/{rotaId}/addOnibus/{onibusId}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/onibus/*").hasRole("ADMIN")
 
                         // Paradas
                         .requestMatchers(HttpMethod.GET, "/parada").permitAll()
@@ -73,6 +77,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/parada/").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/parada/*").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/rota/{rotaId}/addParada/{paradaId}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/parada/*").hasRole("ADMIN")
 
                         // Cidade
                         .requestMatchers(HttpMethod.GET, "/cidade/").permitAll()
